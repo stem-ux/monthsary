@@ -2,47 +2,10 @@ const card = document.getElementById("card");
 const message = document.getElementById("message");
 const music = document.getElementById("bgMusic");
 const envelopeScreen = document.getElementById("envelope-screen");
-const angle = Math.random() * Math.PI * 2;
-const radius = Math.random() * 150 + 50;
-const x = Math.cos(angle) * radius;
-const y = Math.sin(angle) * radius * -1;
-setTimeout(burstHearts, 300);
-burstHearts();
-setTimeout(burstHearts, 300);
-
-
 
 let musicStarted = false;
 let isOpen = false;
-setTimeout(() => music.play(), 600);
 
-// Open envelope
-envelopeScreen.addEventListener("click", () => {
-  envelopeScreen.classList.add("hide");
-});
-
-
-
-// Background loops
-setInterval(createFallingPhoto, 2200);
-setInterval(createFallingHeart, 900);
-setInterval(createPetal, 1300);
-
-// Create stars once
-createStars(60);
-
-card.addEventListener("click", () => {
-  isOpen = !isOpen;
-  message.classList.toggle("open", isOpen);
-
-  if (!musicStarted) {
-    music.volume = 0.3;
-    music.play();
-    musicStarted = true;
-  }
-
-  burstHearts();
-});
 // YOUR PHOTOS
 const photos = [
   "photos/pic1.jpg",
@@ -50,9 +13,42 @@ const photos = [
   "photos/pic3.jpg",
   "photos/pic4.jpg"
 ];
+let lastPhotoIndex = -1; // track last shown photo
+
+// ===== ENVELOPE CLICK =====
+envelopeScreen.addEventListener("click", () => {
+  envelopeScreen.classList.add("hide"); // hide envelope
+  card.style.display = "block";         // show card
+  if (!musicStarted) {
+    music.volume = 0.3;
+    music.play().catch(() => {});
+    musicStarted = true;
+  }
+});
+
+// ===== CARD CLICK =====
+card.addEventListener("click", () => {
+  isOpen = !isOpen;
+  message.classList.toggle("open", isOpen);
+  burstHearts();
+
+  if (!musicStarted) {
+    music.volume = 0.3;
+    music.play().catch(() => {});
+    musicStarted = true;
+  }
+});
+
+// ===== FALLING PHOTOS =====
 function createFallingPhoto() {
+  let index;
+  do {
+    index = Math.floor(Math.random() * photos.length);
+  } while (index === lastPhotoIndex && photos.length > 1);
+  lastPhotoIndex = index;
+
   const img = document.createElement("img");
-  img.src = photos[Math.floor(Math.random() * photos.length)];
+  img.src = photos[index];
   img.className = "falling-photo";
 
   const drift = Math.random() * 40 - 20;
@@ -68,7 +64,7 @@ function createFallingPhoto() {
   setTimeout(() => img.remove(), 15000);
 }
 
-// ===== HEARTS =====
+// ===== FALLING HEARTS =====
 function createFallingHeart() {
   const heart = document.createElement("div");
   heart.className = "falling-heart";
@@ -113,17 +109,15 @@ function createStars(count) {
   }
 }
 
-// ===== CLICK BURST =====
+// ===== CLICK BURST HEARTS =====
 function burstHearts() {
   const rect = message.getBoundingClientRect();
 
-  // Origin = center of the letter
   const originX = rect.left + rect.width / 2;
   const originY = rect.top + rect.height / 2;
 
   const emojis = ["❤️", "💖", "💕", "💘", "💞"];
-
-  const totalHearts = 35; // MORE HEARTS 😍
+  const totalHearts = 35;
 
   for (let i = 0; i < totalHearts; i++) {
     const heart = document.createElement("div");
@@ -133,8 +127,7 @@ function burstHearts() {
     heart.style.left = originX + "px";
     heart.style.top = originY + "px";
 
-    // FULL SCREEN SPREAD
-    const angle = Math.random() * Math.PI * 2; // 360°
+    const angle = Math.random() * Math.PI * 2;
     const radius = Math.random() * (window.innerWidth / 1.2);
 
     const x = Math.cos(angle) * radius;
@@ -147,15 +140,12 @@ function burstHearts() {
     heart.style.animationDuration = Math.random() * 1 + 2 + "s";
 
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 3000);
   }
 }
 
-
-
-
-
-
-
-
+// ===== INITIALIZE =====
+setInterval(createFallingPhoto, 2200);
+setInterval(createFallingHeart, 900);
+setInterval(createPetal, 1300);
+createStars(60);
