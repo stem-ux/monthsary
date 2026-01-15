@@ -50,57 +50,32 @@ const photos = [
   "photos/pic3.jpg",
   "photos/pic4.jpg"
 ];
-let photoIndex = 0;
+let lastPhotoIndex = -1; // track last shown photo
 
-function createFallingPhoto() {
-  const photo = document.createElement("img");
-  photo.className = "falling-photo";
-  photo.src = photos[photoIndex];
-  photoIndex = (photoIndex + 1) % photos.length;
+function createFallingPhoto() { 
+  // Pick a photo different from the last one
+  let index;
+  do {
+    index = Math.floor(Math.random() * photos.length);
+  } while (index === lastPhotoIndex && photos.length > 1);
+  lastPhotoIndex = index;
 
-  // Random horizontal start position
-  photo.style.left = Math.random() * (window.innerWidth - 100) + "px";
-  photo.style.width = 100 + "px";
-  photo.style.position = "fixed";
-  photo.style.top = "-120px";
-  photo.style.zIndex = 5;
-  photo.style.pointerEvents = "none";
+  const img = document.createElement("img");
+  img.src = photos[index]; // use the chosen photo
+  img.className = "falling-photo";
 
-  // Random rotation and sway
-  const rotation = Math.random() * 30 - 15; // -15° to +15°
-  const sway = Math.random() * 50 - 25; // -25px to +25px horizontal drift
+  const drift = Math.random() * 40 - 20;  // horizontal drift
+  const rotate = Math.random() * 20 - 10; // rotation
 
-  document.body.appendChild(photo);
+  img.style.left = Math.random() * 100 + "vw";
+  img.style.setProperty("--x-start", "0px");
+  img.style.setProperty("--x-end", drift + "px");
+  img.style.setProperty("--rotate", rotate + "deg");
+  img.style.animationDuration = Math.random() * 6 + 8 + "s";
 
-  // Animate using requestAnimationFrame for natural movement
-  const duration = 7000 + Math.random() * 3000; // 7-10 seconds
-  const startTime = performance.now();
-
-  function animate(time) {
-    const elapsed = time - startTime;
-    const progress = elapsed / duration;
-
-    // Vertical fall
-    photo.style.top = -120 + progress * (window.innerHeight + 200) + "px";
-
-    // Horizontal sway (natural drifting)
-    photo.style.left = (parseFloat(photo.style.left) + Math.sin(progress * Math.PI * 2) * sway) + "px";
-
-    // Rotation
-    photo.style.transform = `rotate(${rotation * Math.sin(progress * Math.PI)}deg)`;
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      photo.remove();
-    }
-  }
-
-  requestAnimationFrame(animate);
+  document.body.appendChild(img);
+  setTimeout(() => img.remove(), 15000);
 }
-
-// Create a new falling photo every 2 seconds
-setInterval(createFallingPhoto, 2000);
 
 // ===== HEARTS =====
 function createFallingHeart() {
@@ -185,6 +160,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
