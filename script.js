@@ -50,22 +50,13 @@ const photos = [
   "photos/pic3.jpg",
   "photos/pic4.jpg"
 ];
-let lastPhotoIndex = -1; // track last shown photo
-
-function createFallingPhoto() { 
-  // Pick a photo different from the last one
-  let index;
-  do {
-    index = Math.floor(Math.random() * photos.length);
-  } while (index === lastPhotoIndex && photos.length > 1);
-  lastPhotoIndex = index;
-
+function createFallingPhoto() {
   const img = document.createElement("img");
-  img.src = photos[index]; // use the chosen photo
+  img.src = photos[Math.floor(Math.random() * photos.length)];
   img.className = "falling-photo";
 
-  const drift = Math.random() * 40 - 20;  // horizontal drift
-  const rotate = Math.random() * 20 - 10; // rotation
+  const drift = Math.random() * 40 - 20;
+  const rotate = Math.random() * 20 - 10;
 
   img.style.left = Math.random() * 100 + "vw";
   img.style.setProperty("--x-start", "0px");
@@ -160,6 +151,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
