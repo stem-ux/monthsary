@@ -25,7 +25,8 @@ envelopeScreen.addEventListener("click", () => {
 const photos = [
   "photos/pic1.jpg",
   "photos/pic2.jpg",
-  "photos/pic3.jpg"
+  "photos/pic3.jpg",
+  "photos/pic4.jpg"
 ];
 
 // Background loops
@@ -151,5 +152,6 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
