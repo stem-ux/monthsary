@@ -16,11 +16,14 @@ let musicStarted = false;
 let isOpen = false;
 setTimeout(() => music.play(), 600);
 
-// Open envelope
+// // Open envelope
+// envelopeScreen.addEventListener("click", () => {
+//   envelopeScreen.classList.add("hide");
+// });
 envelopeScreen.addEventListener("click", () => {
-  envelopeScreen.classList.add("hide");
+  envelopeScreen.classList.add("hide");  // hide envelope
+  card.classList.add("ready");           // mark card ready to click
 });
-
 
 
 // Background loops
@@ -31,7 +34,21 @@ setInterval(createPetal, 1300);
 // Create stars once
 createStars(60);
 
+// card.addEventListener("click", () => {
+//   isOpen = !isOpen;
+//   message.classList.toggle("open", isOpen);
+
+//   if (!musicStarted) {
+//     music.volume = 0.3;
+//     music.play();
+//     musicStarted = true;
+//   }
+//   burstHearts();
+// });
 card.addEventListener("click", () => {
+  // only allow opening if envelope has been clicked
+  if (!card.classList.contains("ready")) return;
+
   isOpen = !isOpen;
   message.classList.toggle("open", isOpen);
 
@@ -43,6 +60,9 @@ card.addEventListener("click", () => {
 
   burstHearts();
 });
+
+
+
 // YOUR PHOTOS
 const photos = [
   "photos/pic1.jpg",
@@ -151,6 +171,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
