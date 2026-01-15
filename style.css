@@ -61,16 +61,6 @@ p {
 }
 
 .message {
-  /* max-height: 0;
-  overflow: hidden;
-  margin-top: 15px;
-  color: #333;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  background: #fff;
-  padding: 0 15px;
-  border-radius: 10px;
-  transition: max-height 0.8s ease, padding 0.6s ease; */
   max-height: 300px;       /* height of the box */
   overflow-y: auto;        /* vertical scrollbar if content exceeds height */
   padding: 20px;
@@ -390,6 +380,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
