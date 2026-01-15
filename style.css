@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+  text-align: center;
+}
+.star {
+  box-shadow: 0 0 6px white;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+p {
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #fff;
+  color: #ff6f91;
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.message {
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 15px;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: #fff;
+  padding: 0 15px;
+  border-radius: 10px;
+  transition: max-height 0.8s ease, padding 0.6s ease;
+}
+
+.message.open {
+  max-height: 300px;
+  padding: 15px;
+}
+
+/* Paper edge effect */
+.message::before {
+  content: "";
+  display: block;
+  height: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #f1f1f1,
+    #f1f1f1 5px,
+    #e6e6e6 5px,
+    #e6e6e6 10px
+  );
+  margin-bottom: 10px;
+}
+
+.heart {
+  font-size: 1.5rem;
+  animation: beat 1s infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.floating-heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 4s linear forwards;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
+}
+.falling-photo {
+  position: fixed;
+  top: -120px;
+  width: 90px;        /* same size */
+  height: auto;       /* keep aspect ratio */
+  object-fit: contain; /* no cropping */
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  opacity: 0.9;
+  animation: fall linear forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+@keyframes fall {
+  from {
+    transform: translate(var(--x-start), -120px) rotate(var(--rotate));
+    opacity: 0;
+  }
+  to {
+    transform: translate(var(--x-end), 110vh) rotate(var(--rotate));
+    opacity: 1;
+  }
+}
+/* Falling hearts */
+.falling-heart {
+  position: fixed;
+  top: -30px;
+  font-size: 18px;
+  animation: heartFall linear forwards;
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+@keyframes heartFall {
+  from {
+    transform: translateX(var(--x-start)) translateY(-30px) scale(1);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(var(--x-end)) translateY(110vh) scale(1.4);
+    opacity: 1;
+  }
+}
+
+/* Photos layer */
+.falling-photo {
+  z-index: 1;
+}
+
+/* Foreground content */
+.container {
+  position: relative;
+  z-index: 10;
+}
+/* ===== BACKGROUND ELEMENTS ===== */
+
+.container {
+  position: relative;
+  z-index: 10;
+}
+
+/* Falling Photos */
+.falling-photo {
+  position: fixed;
+  top: -120px;
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  animation: fall linear forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Falling Hearts */
+.falling-heart {
+  position: fixed;
+  top: -30px;
+  font-size: 18px;
+  opacity: 0.7;
+  animation: heartFall linear forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Click Hearts */
+.floating-heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 4s linear forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Falling Petals */
+.petal {
+  position: fixed;
+  top: -20px;
+  font-size: 16px;
+  opacity: 0.6;
+  animation: petalFall linear forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Stars */
+.star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+  z-index: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fall {
+  from {
+    transform: translate(var(--x-start), -120px) rotate(var(--rotate));
+  }
+  to {
+    transform: translate(var(--x-end), 110vh) rotate(var(--rotate));
+  }
+}
+
+@keyframes heartFall {
+  from {
+    transform: translateX(var(--x-start)) translateY(-30px);
+  }
+  to {
+    transform: translateX(var(--x-end)) translateY(110vh);
+  }
+}
+
+@keyframes petalFall {
+  from {
+    transform: translateX(var(--x-start)) translateY(-30px) rotate(0deg);
+  }
+  to {
+    transform: translateX(var(--x-end)) translateY(110vh) rotate(360deg);
+  }
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+/* ===== DARK MIDNIGHT MODE ===== */
+body {
+  background: radial-gradient(circle at top, #1a1a40, #0b0b1a);
+}
+
+/* Handwritten font */
+h1, p, .message {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* Envelope screen */
+#envelope-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #1a1a40, #050512);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  color: #fff;
+  text-align: center;
+}
+
+.envelope {
+  cursor: pointer;
+  animation: floatEnvelope 3s ease-in-out infinite;
+}
+
+.envelope-front {
+  font-size: 80px;
+  margin-bottom: 10px;
+}
+
+@keyframes floatEnvelope {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Fade out envelope */
+#envelope-screen.hide {
+  animation: fadeOut 1.2s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Dark container glow */
+.container {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.15);
+}
+
+/* Message paper glow */
+.message.open {
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
+}
+/* Heart burst from letter */
+.letter-heart {
+  position: fixed;
+  font-size: 26px; /* bigger hearts */
+  pointer-events: none;
+  animation: letterBurst 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  z-index: 30;
+}
+
+@keyframes letterBurst {
+  0% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(2);
+    opacity: 0;
+  }
+}
+.letter-heart {
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+
+
