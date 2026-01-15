@@ -58,12 +58,13 @@ p {
   display: inline-block; /* auto height */
 }
 .signature {
-  font-family: 'Great Vibes', cursive; /* handwritten font */
+  font-family: 'Great Vibes', cursive; /* Handwritten font */
   font-size: 2em;
   text-align: right;
   margin-top: 20px;
-  color: #ff69b4; /* pink */
+  color: #ff69b4; /* Pink color */
 }
+
 
 .card:hover {
   transform: translateY(-5px);
@@ -406,6 +407,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
