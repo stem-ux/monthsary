@@ -21,13 +21,7 @@ envelopeScreen.addEventListener("click", () => {
   envelopeScreen.classList.add("hide");
 });
 
-// YOUR PHOTOS
-const photos = [
-  "photos/pic1.jpg",
-  "photos/pic2.jpg",
-  "photos/pic3.jpg",
-  "photos/pic4.jpg"
-];
+
 
 // Background loops
 setInterval(createFallingPhoto, 2200);
@@ -49,23 +43,25 @@ card.addEventListener("click", () => {
 
   burstHearts();
 });
-let lastPhotoIndex = -1; // track last shown photo
-// ===== PHOTOS =====
+// YOUR PHOTOS
+const photos = [
+  "photos/pic1.jpg",
+  "photos/pic2.jpg",
+  "photos/pic3.jpg",
+  "photos/pic4.jpg"
+];
+let photoIndex = 0; // track which photo to show next
+
 function createFallingPhoto() {
   const photo = document.createElement("img");
   photo.className = "falling-photo";
 
-  // Pick a photo that's not the same as last one
-  let index;
-  do {
-    index = Math.floor(Math.random() * photos.length);
-  } while (index === lastPhotoIndex && photos.length > 1);
-
-  lastPhotoIndex = index;
-  photo.src = photos[index];
+  // Cycle through photos in order
+  photo.src = photos[photoIndex];
+  photoIndex = (photoIndex + 1) % photos.length; // loops back to 0
 
   // Random start position
-  photo.style.left = Math.random() * (window.innerWidth - 80) + "px"; // 80 = photo width
+  photo.style.left = Math.random() * (window.innerWidth - 80) + "px";
   photo.style.width = "80px";
   photo.style.position = "fixed";
   photo.style.top = "-100px";
@@ -92,7 +88,7 @@ function createFallingPhoto() {
   setTimeout(() => photo.remove(), duration);
 }
 
-// Repeat every 1.5s (adjust as needed)
+// Repeat every 1.5 seconds
 setInterval(createFallingPhoto, 1500);
 
 // ===== HEARTS =====
@@ -178,6 +174,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
