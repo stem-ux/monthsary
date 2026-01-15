@@ -62,7 +62,7 @@ p {
   font-size: 2em;
   text-align: right;
   margin-top: 20px;
-  color: #ff69b4; /* Pink color */
+  color: #000000; /* Pink color */
 }
 
 
@@ -407,6 +407,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
