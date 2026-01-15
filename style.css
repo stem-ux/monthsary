@@ -70,7 +70,7 @@ p {
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-.message {
+/* .message {
   max-height: 300px;
   overflow-y: auto;
   padding: 20px;
@@ -85,6 +85,22 @@ p {
 .message.open {
   max-height: 300px;
   padding: 15px;
+} */
+.message {
+  max-height: 0;          /* start hidden */
+  overflow-y: hidden;     /* hide scrollbar */
+  padding: 0 20px;        /* no vertical padding at start */
+  opacity: 0;             /* invisible */
+  transition: max-height 0.6s ease, padding 0.6s ease, opacity 0.6s ease;
+}
+
+.message.open {
+  max-height: 300px;      /* height when opened */
+  padding: 20px;          /* restore padding */
+  overflow-y: auto;       /* enable scrolling if needed */
+  opacity: 1;
+  scroll-behavior: smooth;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
 }
 
 /* Paper edge effect */
@@ -391,6 +407,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
