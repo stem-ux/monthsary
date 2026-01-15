@@ -49,25 +49,51 @@ card.addEventListener("click", () => {
 
   burstHearts();
 });
-
+let lastPhotoIndex = -1; // track last shown photo
 // ===== PHOTOS =====
 function createFallingPhoto() {
-  const img = document.createElement("img");
-  img.src = photos[Math.floor(Math.random() * photos.length)];
-  img.className = "falling-photo";
+  const photo = document.createElement("img");
+  photo.className = "falling-photo";
 
-  const drift = Math.random() * 40 - 20;
-  const rotate = Math.random() * 20 - 10;
+  // Pick a photo that's not the same as last one
+  let index;
+  do {
+    index = Math.floor(Math.random() * photos.length);
+  } while (index === lastPhotoIndex && photos.length > 1);
 
-  img.style.left = Math.random() * 100 + "vw";
-  img.style.setProperty("--x-start", "0px");
-  img.style.setProperty("--x-end", drift + "px");
-  img.style.setProperty("--rotate", rotate + "deg");
-  img.style.animationDuration = Math.random() * 6 + 8 + "s";
+  lastPhotoIndex = index;
+  photo.src = photos[index];
 
-  document.body.appendChild(img);
-  setTimeout(() => img.remove(), 15000);
+  // Random start position
+  photo.style.left = Math.random() * (window.innerWidth - 80) + "px"; // 80 = photo width
+  photo.style.width = "80px";
+  photo.style.position = "fixed";
+  photo.style.top = "-100px";
+  photo.style.zIndex = 5;
+  photo.style.pointerEvents = "none";
+
+  document.body.appendChild(photo);
+
+  // Animate falling
+  const endY = window.innerHeight + 100;
+  const duration = 4000 + Math.random() * 3000; // 4-7 seconds
+
+  photo.animate(
+    [
+      { transform: `translateY(0px)` },
+      { transform: `translateY(${endY}px)` }
+    ],
+    {
+      duration: duration,
+      easing: "linear"
+    }
+  );
+
+  setTimeout(() => photo.remove(), duration);
 }
+
+// Repeat every 1.5s (adjust as needed)
+setInterval(createFallingPhoto, 1500);
 
 // ===== HEARTS =====
 function createFallingHeart() {
@@ -152,6 +178,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
