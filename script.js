@@ -50,46 +50,57 @@ const photos = [
   "photos/pic3.jpg",
   "photos/pic4.jpg"
 ];
-let photoIndex = 0; // track which photo to show next
+let photoIndex = 0;
 
 function createFallingPhoto() {
   const photo = document.createElement("img");
   photo.className = "falling-photo";
-
-  // Cycle through photos in order
   photo.src = photos[photoIndex];
-  photoIndex = (photoIndex + 1) % photos.length; // loops back to 0
+  photoIndex = (photoIndex + 1) % photos.length;
 
-  // Random start position
-  photo.style.left = Math.random() * (window.innerWidth - 80) + "px";
-  photo.style.width = "80px";
+  // Random horizontal start position
+  photo.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  photo.style.width = 100 + "px";
   photo.style.position = "fixed";
-  photo.style.top = "-100px";
+  photo.style.top = "-120px";
   photo.style.zIndex = 5;
   photo.style.pointerEvents = "none";
 
+  // Random rotation and sway
+  const rotation = Math.random() * 30 - 15; // -15° to +15°
+  const sway = Math.random() * 50 - 25; // -25px to +25px horizontal drift
+
   document.body.appendChild(photo);
 
-  // Animate falling
-  const endY = window.innerHeight + 100;
-  const duration = 4000 + Math.random() * 3000; // 4-7 seconds
+  // Animate using requestAnimationFrame for natural movement
+  const duration = 7000 + Math.random() * 3000; // 7-10 seconds
+  const startTime = performance.now();
 
-  photo.animate(
-    [
-      { transform: `translateY(0px)` },
-      { transform: `translateY(${endY}px)` }
-    ],
-    {
-      duration: duration,
-      easing: "linear"
+  function animate(time) {
+    const elapsed = time - startTime;
+    const progress = elapsed / duration;
+
+    // Vertical fall
+    photo.style.top = -120 + progress * (window.innerHeight + 200) + "px";
+
+    // Horizontal sway (natural drifting)
+    photo.style.left = (parseFloat(photo.style.left) + Math.sin(progress * Math.PI * 2) * sway) + "px";
+
+    // Rotation
+    photo.style.transform = `rotate(${rotation * Math.sin(progress * Math.PI)}deg)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      photo.remove();
     }
-  );
+  }
 
-  setTimeout(() => photo.remove(), duration);
+  requestAnimationFrame(animate);
 }
 
-// Repeat every 1.5 seconds
-setInterval(createFallingPhoto, 1500);
+// Create a new falling photo every 2 seconds
+setInterval(createFallingPhoto, 2000);
 
 // ===== HEARTS =====
 function createFallingHeart() {
@@ -174,6 +185,7 @@ function burstHearts() {
     setTimeout(() => heart.remove(), 3000);
   }
 }
+
 
 
 
