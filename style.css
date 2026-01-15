@@ -45,6 +45,8 @@ p {
   border-radius: 15px;
   position: relative;
   display: inline-block; /* auto height */
+  z-index: 10; /* lower than envelope */
+  position: relative;
 }
 .signature {
   font-family: 'Great Vibes', cursive; /* handwritten font */
