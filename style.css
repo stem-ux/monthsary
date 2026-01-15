@@ -61,7 +61,7 @@ p {
 }
 
 .message {
-  max-height: 0;
+  /* max-height: 0;
   overflow: hidden;
   margin-top: 15px;
   color: #333;
@@ -70,7 +70,15 @@ p {
   background: #fff;
   padding: 0 15px;
   border-radius: 10px;
-  transition: max-height 0.8s ease, padding 0.6s ease;
+  transition: max-height 0.8s ease, padding 0.6s ease; */
+  max-height: 300px;       /* height of the box */
+  overflow-y: auto;        /* vertical scrollbar if content exceeds height */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* optional styling */
+  border-radius: 10px;     /* optional styling */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);     /* optional styling */
+  font-family: 'Dancing Script', cursive;      /* keeps your font */
+  font-size: 18px;
 }
 
 .message.open {
@@ -382,6 +390,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
