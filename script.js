@@ -2,52 +2,22 @@ const card = document.getElementById("card");
 const message = document.getElementById("message");
 const music = document.getElementById("bgMusic");
 const envelopeScreen = document.getElementById("envelope-screen");
-const angle = Math.random() * Math.PI * 2;
-const radius = Math.random() * 150 + 50;
-const x = Math.cos(angle) * radius;
-const y = Math.sin(angle) * radius * -1;
-setTimeout(burstHearts, 300);
-burstHearts();
-setTimeout(burstHearts, 300);
-
-
 
 let musicStarted = false;
 let isOpen = false;
+
+// Play background music a little later
 setTimeout(() => music.play(), 600);
 
-// // Open envelope
-// envelopeScreen.addEventListener("click", () => {
-//   envelopeScreen.classList.add("hide");
-// });
+// Envelope click → hide envelope & enable card
 envelopeScreen.addEventListener("click", () => {
   envelopeScreen.classList.add("hide");  // hide envelope
   card.classList.add("ready");           // mark card ready to click
 });
 
-
-// Background loops
-setInterval(createFallingPhoto, 2200);
-setInterval(createFallingHeart, 900);
-setInterval(createPetal, 1300);
-
-// Create stars once
-createStars(60);
-
-// card.addEventListener("click", () => {
-//   isOpen = !isOpen;
-//   message.classList.toggle("open", isOpen);
-
-//   if (!musicStarted) {
-//     music.volume = 0.3;
-//     music.play();
-//     musicStarted = true;
-//   }
-//   burstHearts();
-// });
+// Card click → open letter only if envelope clicked
 card.addEventListener("click", () => {
-  // only allow opening if envelope has been clicked
-  if (!card.classList.contains("ready")) return;
+  if (!card.classList.contains("ready")) return;  // ignore clicks before envelope
 
   isOpen = !isOpen;
   message.classList.toggle("open", isOpen);
@@ -61,7 +31,13 @@ card.addEventListener("click", () => {
   burstHearts();
 });
 
+// Background loops
+setInterval(createFallingPhoto, 2200);
+setInterval(createFallingHeart, 900);
+setInterval(createPetal, 1300);
 
+// Create stars once
+createStars(60);
 
 // YOUR PHOTOS
 const photos = [
@@ -70,6 +46,7 @@ const photos = [
   "photos/pic3.jpg",
   "photos/pic4.jpg"
 ];
+
 function createFallingPhoto() {
   const img = document.createElement("img");
   img.src = photos[Math.floor(Math.random() * photos.length)];
@@ -88,7 +65,6 @@ function createFallingPhoto() {
   setTimeout(() => img.remove(), 15000);
 }
 
-// ===== HEARTS =====
 function createFallingHeart() {
   const heart = document.createElement("div");
   heart.className = "falling-heart";
@@ -106,7 +82,6 @@ function createFallingHeart() {
   setTimeout(() => heart.remove(), 12000);
 }
 
-// ===== PETALS =====
 function createPetal() {
   const petal = document.createElement("div");
   petal.className = "petal";
@@ -121,7 +96,6 @@ function createPetal() {
   setTimeout(() => petal.remove(), 14000);
 }
 
-// ===== STARS =====
 function createStars(count) {
   for (let i = 0; i < count; i++) {
     const star = document.createElement("div");
@@ -133,17 +107,13 @@ function createStars(count) {
   }
 }
 
-// ===== CLICK BURST =====
 function burstHearts() {
   const rect = message.getBoundingClientRect();
 
-  // Origin = center of the letter
   const originX = rect.left + rect.width / 2;
   const originY = rect.top + rect.height / 2;
-
   const emojis = ["❤️", "💖", "💕", "💘", "💞"];
-
-  const totalHearts = 35; // MORE HEARTS 😍
+  const totalHearts = 35;
 
   for (let i = 0; i < totalHearts; i++) {
     const heart = document.createElement("div");
@@ -153,8 +123,7 @@ function burstHearts() {
     heart.style.left = originX + "px";
     heart.style.top = originY + "px";
 
-    // FULL SCREEN SPREAD
-    const angle = Math.random() * Math.PI * 2; // 360°
+    const angle = Math.random() * Math.PI * 2;
     const radius = Math.random() * (window.innerWidth / 1.2);
 
     const x = Math.cos(angle) * radius;
@@ -167,15 +136,6 @@ function burstHearts() {
     heart.style.animationDuration = Math.random() * 1 + 2 + "s";
 
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 3000);
   }
 }
-
-
-
-
-
-
-
-
