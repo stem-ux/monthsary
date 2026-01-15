@@ -39,6 +39,7 @@ p {
   width: 90%;
   max-width: 500px;
   background: #fff8e1; /* paper color */
+  color: #ff6f91;
   margin: 50px auto;
   padding: 20px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
@@ -381,6 +382,7 @@ h1, p, .message {
 .letter-heart {
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
+
 
 
 
